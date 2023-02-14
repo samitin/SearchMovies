@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="images">
+        <item>@drawable/image_space_jam_a_new_legacy</item>
+        <item>@drawable/black_widow</item>
+        <item>@drawable/the_forever_purge</item>
+        <item>@drawable/the_boss_baby</item>
+        <item>@drawable/the_tomorrow_war</item>
+    </integer-array>
+</resources>
