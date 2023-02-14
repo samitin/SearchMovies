@@ -1,8 +1,10 @@
 package ru.samitin.searchmovies.model.repository
 
-import ru.samitin.searchmovies.model.Movie
+import ru.samitin.searchmovies.entities.Category
+import ru.samitin.searchmovies.entities.Movie
 
 interface Repository {
-    fun getMovieFromServer() : Movie
-    fun getMovieFromLocalStorage() : Movie
+    fun getMoviesFromLocalStorage(): List<Movie>
+
+    fun getMoviesFromServer(): List<Movie>
 }
