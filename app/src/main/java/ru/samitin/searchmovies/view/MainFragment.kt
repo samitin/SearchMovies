@@ -1,5 +1,6 @@
 package ru.samitin.searchmovies.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,6 +13,9 @@ import com.google.android.material.snackbar.Snackbar
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentMainListBinding
 import ru.samitin.searchmovies.entities.Movie
+import ru.samitin.searchmovies.utils.hide
+import ru.samitin.searchmovies.utils.show
+import ru.samitin.searchmovies.utils.showSnackBar
 import ru.samitin.searchmovies.viewmodel.AppState
 import ru.samitin.searchmovies.viewmodel.MainViewModel
 
@@ -22,19 +26,21 @@ class MainFragment : Fragment() {
 
     private var _binding :FragmentMainListBinding ?= null
     private val binding get() = _binding!!
-    private lateinit var viewModel: MainViewModel
-    private lateinit var adapter :MyItemRecyclerViewAdapter
 
+    private val viewModel : MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+    private lateinit var adapter :MyItemRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         _binding = FragmentMainListBinding.inflate(inflater,container,false)
         return binding.root
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyItemRecyclerViewAdapter(object : OnClickItemListener{
-            override fun onClick(movie: Movie) {
+        adapter = MyItemRecyclerViewAdapter() {movie ->
                 val manager = activity?.supportFragmentManager
                         if (manager != null) {
                             manager.beginTransaction()
@@ -42,12 +48,11 @@ class MainFragment : Fragment() {
                                 .addToBackStack("")
                                 .commitAllowingStateLoss()
                         }
-            }
-        })
+        }
+
         binding.rvList.layoutManager = GridLayoutManager(context,3)
         binding.rvList.adapter = adapter
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         var obsrver = Observer<AppState>{renderData(it)}
         viewModel.getLiveData().observe(viewLifecycleOwner,obsrver)
         viewModel.getMovieFromLocalStorage()
@@ -56,17 +61,17 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState?) {
         when(appState){
             is AppState.Success ->{
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingLayout.hide()
                 adapter.setMovies(appState.movies)
             }
             is AppState.Loading ->{
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingLayout.show()
             }
-            is AppState.Error ->{
-                binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.rvList,"Error", Snackbar.LENGTH_SHORT)
-                    .setAction("Reload"){viewModel.getMovieFromLocalStorage()}
-                    .show()
+            is AppState.Error -> {
+                binding.loadingLayout.hide()
+                binding.rvList.showSnackBar(R.string.snackBarError,R.string.snackBarReload) {
+                    viewModel.getMovieFromLocalStorage()
+                }
             }
             else -> {}
         }

@@ -6,7 +6,7 @@ import ru.samitin.searchmovies.entities.Movie
 
 
 class RepositoryImpl : Repository {
-    private var movies:List<Movie> = listOf<Movie>(
+    private var movies = listOf<Movie>(
         Movie("Космический джем: Новое поколение",0,78,"08 июль 2021",
         "Чтобы спасти сына, знаменитый чемпион НБА отправляется в сказочный мир," +
                 " где в команде мультяшек вынужден сражаться на баскетбольной площадке с " +
@@ -27,7 +27,7 @@ class RepositoryImpl : Repository {
             "В будущем идёт разрушительный конфликт с инопланетной расой." +
                     " В попытке переломить ход войны учёные начинают призывать в свою армию солдат из прошлого.")
     )
-    private var categories:List<Category> = listOf(
+    private var categories = listOf(
         Category("Боевики", movies),
         Category("Комедии", movies),
         Category("Фантастика", movies),
@@ -35,6 +35,6 @@ class RepositoryImpl : Repository {
         Category("Мультфильмы", movies)
     )
 
-    override fun getMoviesFromLocalStorage(): List<Movie> = movies
-    override fun getMoviesFromServer(): List<Movie> = movies
+    override fun getMoviesFromLocalStorage() = movies
+    override fun getMoviesFromServer() = movies
 }

@@ -12,7 +12,7 @@ import ru.samitin.searchmovies.entities.Movie
  * TODO: Replace the implementation with code for your data type.
  */
 
-class MyItemRecyclerViewAdapter(var onItemClick:OnClickItemListener) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+class MyItemRecyclerViewAdapter(var onItemClick:(movie: Movie) -> Unit) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     private var values: List<Movie> = arrayListOf()
 
@@ -32,7 +32,7 @@ class MyItemRecyclerViewAdapter(var onItemClick:OnClickItemListener) : RecyclerV
             rating.text = item.rating.toString()
             image.setImageResource(R.drawable.the_boss_baby)
             image.setOnClickListener {
-                onItemClick.onClick(item)
+                onItemClick(item)
             }
         }
     }
@@ -41,7 +41,4 @@ class MyItemRecyclerViewAdapter(var onItemClick:OnClickItemListener) : RecyclerV
 
     inner class ViewHolder(val binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-}
-interface OnClickItemListener{
-    fun onClick(movie : Movie)
 }
