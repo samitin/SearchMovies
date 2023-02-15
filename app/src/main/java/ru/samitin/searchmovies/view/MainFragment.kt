@@ -33,8 +33,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyItemRecyclerViewAdapter(object : OnClickItemListener{
-            override fun onClick(movie: Movie) {
+        adapter = MyItemRecyclerViewAdapter() {movie ->
                 val manager = activity?.supportFragmentManager
                         if (manager != null) {
                             manager.beginTransaction()
@@ -42,8 +41,8 @@ class MainFragment : Fragment() {
                                 .addToBackStack("")
                                 .commitAllowingStateLoss()
                         }
-            }
-        })
+        }
+
         binding.rvList.layoutManager = GridLayoutManager(context,3)
         binding.rvList.adapter = adapter
 
