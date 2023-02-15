@@ -29,7 +29,6 @@ class MainFragment : Fragment() {
     }
     private lateinit var adapter :MyItemRecyclerViewAdapter
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         _binding = FragmentMainListBinding.inflate(inflater,container,false)
         return binding.root

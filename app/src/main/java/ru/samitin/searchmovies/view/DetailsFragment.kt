@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentDetailsBinding
 import ru.samitin.searchmovies.entities.Movie
 import ru.samitin.searchmovies.viewmodel.MainViewModel
@@ -68,7 +69,7 @@ class DetailsFragment: Fragment() {
     private fun setData(movie: Movie) {
         binding.apply {
             desName.text = movie.name
-            //desImage.
+            desImage.setImageResource(R.drawable.the_boss_baby)
             desDate.text = movie.date
             desRating.text = movie.rating.toString()
             desDescription.text = movie.description
