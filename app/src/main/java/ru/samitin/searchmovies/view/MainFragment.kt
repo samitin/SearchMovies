@@ -1,5 +1,6 @@
 package ru.samitin.searchmovies.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,7 +23,10 @@ class MainFragment : Fragment() {
 
     private var _binding :FragmentMainListBinding ?= null
     private val binding get() = _binding!!
-    private lateinit var viewModel: MainViewModel
+
+    private val viewModel : MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
     private lateinit var adapter :MyItemRecyclerViewAdapter
 
 
@@ -31,6 +35,7 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = MyItemRecyclerViewAdapter() {movie ->
@@ -46,7 +51,6 @@ class MainFragment : Fragment() {
         binding.rvList.layoutManager = GridLayoutManager(context,3)
         binding.rvList.adapter = adapter
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         var obsrver = Observer<AppState>{renderData(it)}
         viewModel.getLiveData().observe(viewLifecycleOwner,obsrver)
         viewModel.getMovieFromLocalStorage()
