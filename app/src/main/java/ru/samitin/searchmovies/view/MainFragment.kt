@@ -13,6 +13,9 @@ import com.google.android.material.snackbar.Snackbar
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentMainListBinding
 import ru.samitin.searchmovies.entities.Movie
+import ru.samitin.searchmovies.utils.hide
+import ru.samitin.searchmovies.utils.show
+import ru.samitin.searchmovies.utils.showSnackBar
 import ru.samitin.searchmovies.viewmodel.AppState
 import ru.samitin.searchmovies.viewmodel.MainViewModel
 
@@ -58,17 +61,17 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState?) {
         when(appState){
             is AppState.Success ->{
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingLayout.hide()
                 adapter.setMovies(appState.movies)
             }
             is AppState.Loading ->{
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingLayout.show()
             }
-            is AppState.Error ->{
-                binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.rvList,"Error", Snackbar.LENGTH_SHORT)
-                    .setAction("Reload"){viewModel.getMovieFromLocalStorage()}
-                    .show()
+            is AppState.Error -> {
+                binding.loadingLayout.hide()
+                binding.rvList.showSnackBar(R.string.snackBarError,R.string.snackBarReload) {
+                    viewModel.getMovieFromLocalStorage()
+                }
             }
             else -> {}
         }
