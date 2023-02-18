@@ -16,7 +16,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".view.MainFragment"
+    tools:context=".view.list.screen.ListFragment"
     tools:listitem="@layout/fragment_item" />
     <FrameLayout
         android:id="@+id/loadingLayout"

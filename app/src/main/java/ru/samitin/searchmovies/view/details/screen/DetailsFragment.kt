@@ -1,4 +1,4 @@
-package ru.samitin.searchmovies.view
+package ru.samitin.searchmovies.view.details.screen
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentDetailsBinding
 import ru.samitin.searchmovies.entities.Movie
-import ru.samitin.searchmovies.viewmodel.MainViewModel
 
 class DetailsFragment: Fragment() {
 
     companion object {
         const val BUNDLE_EXTRA = "BUNDLE_EXTRA"
-        fun newInstance(movie: Movie) : DetailsFragment{
+        fun newInstance(movie: Movie) : DetailsFragment {
             val bundle = Bundle()
             bundle.putParcelable(BUNDLE_EXTRA,movie)
             val detailsFragment = DetailsFragment()

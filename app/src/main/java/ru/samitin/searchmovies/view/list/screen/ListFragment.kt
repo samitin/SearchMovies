@@ -1,4 +1,4 @@
-package ru.samitin.searchmovies.view
+package ru.samitin.searchmovies.view.list.screen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,28 +9,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentMainListBinding
-import ru.samitin.searchmovies.entities.Movie
 import ru.samitin.searchmovies.utils.hide
 import ru.samitin.searchmovies.utils.show
 import ru.samitin.searchmovies.utils.showSnackBar
-import ru.samitin.searchmovies.viewmodel.AppState
-import ru.samitin.searchmovies.viewmodel.MainViewModel
+import ru.samitin.searchmovies.view.list.adapter.MyItemRecyclerViewAdapter
+import ru.samitin.searchmovies.view.details.screen.DetailsFragment
+import ru.samitin.searchmovies.state.AppState
+import ru.samitin.searchmovies.view.list.viewModel.ListViewModel
 
 /**
  * A fragment representing a list of Items.
  */
-class MainFragment : Fragment() {
+class ListFragment : Fragment() {
 
     private var _binding :FragmentMainListBinding ?= null
     private val binding get() = _binding!!
 
-    private val viewModel : MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
+    private val viewModel : ListViewModel by lazy {
+        ViewModelProvider(this)[ListViewModel::class.java]
     }
-    private lateinit var adapter :MyItemRecyclerViewAdapter
+    private lateinit var adapter : MyItemRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         _binding = FragmentMainListBinding.inflate(inflater,container,false)
@@ -86,7 +86,7 @@ class MainFragment : Fragment() {
         // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            MainFragment().apply {
+            ListFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

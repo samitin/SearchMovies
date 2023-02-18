@@ -1,4 +1,4 @@
-package ru.samitin.searchmovies.viewmodel
+package ru.samitin.searchmovies.state
 
 import ru.samitin.searchmovies.entities.Movie
 

@@ -1,4 +1,4 @@
-package ru.samitin.searchmovies.view
+package ru.samitin.searchmovies.view.list.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
