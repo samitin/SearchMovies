@@ -19,6 +19,12 @@ android {
     buildFeatures{
         viewBinding = true
     }
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def apiKey = properties.getProperty("amdb_api_key", "")
+        it.buildConfigField "String", "API_KEY_AMDB", apiKey
+    }
     buildTypes {
         release {
             minifyEnabled false
