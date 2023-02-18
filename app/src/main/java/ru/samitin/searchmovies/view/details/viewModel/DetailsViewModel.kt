@@ -13,13 +13,14 @@ class DetailsViewModel(private val liveDataToObserve: MutableLiveData<AppState> 
 
     fun getLiveData() : LiveData<AppState> = liveDataToObserve
 
-    fun getMovieFromLocalStorage() = getDataFromLocalSource()
-    fun getMovieFromRemoteStorage() = getDataFromLocalSource()
-    private fun getDataFromLocalSource(){
+    fun getDataFromServer(id:String){
         liveDataToObserve.value = AppState.Loading
-        Thread{
-            Thread.sleep(1000)
-            liveDataToObserve.postValue(AppState.Success(repository.getMoviesFromLocalStorage()))
-        }.start()
+        repository.getMovieDescriptionFromServer(id,{
+            liveDataToObserve.value = AppState.SuccessMovie(it)
+        },{
+            liveDataToObserve.value = AppState.Error(it)
+        })
+
+
     }
 }

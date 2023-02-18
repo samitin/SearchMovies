@@ -5,65 +5,71 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentDetailsBinding
 import ru.samitin.searchmovies.entities.Movie
+import ru.samitin.searchmovies.state.AppState
+import ru.samitin.searchmovies.utils.hide
+import ru.samitin.searchmovies.utils.show
+import ru.samitin.searchmovies.utils.showSnackBar
+import ru.samitin.searchmovies.view.details.viewModel.DetailsViewModel
 
 class DetailsFragment: Fragment() {
 
     companion object {
         const val BUNDLE_EXTRA = "BUNDLE_EXTRA"
-        fun newInstance(movie: Movie) : DetailsFragment {
+        fun newInstance(id:String) : DetailsFragment {
             val bundle = Bundle()
-            bundle.putParcelable(BUNDLE_EXTRA,movie)
+            bundle.putString(BUNDLE_EXTRA,id)
             val detailsFragment = DetailsFragment()
             detailsFragment.arguments = bundle
             return detailsFragment
         }
     }
+    private var id : String = ""
     private var movie : Movie ?= null
     private var _binding : FragmentDetailsBinding?= null
     private val binding get() = _binding!!
-   // private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: DetailsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        movie = arguments?.get(BUNDLE_EXTRA) as Movie
+        id = arguments?.getString(BUNDLE_EXTRA,"").toString()
         _binding = FragmentDetailsBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        /*viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this)[DetailsViewModel::class.java]
         val observer = Observer<AppState>{renderData(it)}
         viewModel.getLiveData().observe(viewLifecycleOwner,observer)
-        viewModel.getMovieFromLocalStorage()*/
-        binding.loadingLayout.visibility = View.GONE
-        setData(movie!!)
+        viewModel.getDataFromServer(id)
     }
 
-   /* private fun renderData(appState: AppState) {
+    private fun renderData(appState: AppState) {
         when(appState){
-            is AppState.Success ->{
-                binding.loadingLayout.visibility = View.GONE
-              // setData(appState.movie)
+            is AppState.SuccessMovie ->{
+                binding.loadingLayout.hide()
+               setData(appState.movie)
 
             }
             is AppState.Loading ->{
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingLayout.show()
             }
             is AppState.Error ->{
-                binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.mainView,"Error",Snackbar.LENGTH_SHORT)
-                    .setAction("Reload"){viewModel.getMovieFromLocalStorage()}
-                    .show()
+                binding.loadingLayout.hide()
+                binding.mainView.showSnackBar(R.string.snackBarError,R.string.snackBarReload){
+                    viewModel.getDataFromServer(id)
+                }
             }
             else -> {}
         }
-    }*/
+    }
 
     private fun setData(movie: Movie) {
         binding.apply {

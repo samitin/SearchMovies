@@ -44,7 +44,7 @@ class ListFragment : Fragment() {
                 val manager = activity?.supportFragmentManager
                         if (manager != null) {
                             manager.beginTransaction()
-                                .add(R.id.container, DetailsFragment.newInstance(movie))
+                                .add(R.id.container, DetailsFragment.newInstance("tt1375666"))
                                 .addToBackStack("")
                                 .commitAllowingStateLoss()
                         }
