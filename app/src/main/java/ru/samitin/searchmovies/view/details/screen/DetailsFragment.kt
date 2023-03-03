@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.api.load
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentDetailsBinding
 import ru.samitin.searchmovies.entities.Movie
@@ -77,7 +78,7 @@ class DetailsFragment: Fragment() {
     private fun setData(movie: Movie) {
         binding.apply {
             desName.text = movie.name
-            desImage.setImageResource(R.drawable.the_boss_baby)
+            desImage.load(movie.image)
             desDate.text = movie.date
             desRating.text = movie.rating.toString()
             desDescription.text = movie.description
