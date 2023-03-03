@@ -32,7 +32,9 @@ class DetailsFragment: Fragment() {
     private var movie : Movie ?= null
     private var _binding : FragmentDetailsBinding?= null
     private val binding get() = _binding!!
-    private lateinit var viewModel: DetailsViewModel
+    private val viewModel: DetailsViewModel by lazy {
+        ViewModelProvider(this).get(DetailsViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,9 +45,9 @@ class DetailsFragment: Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[DetailsViewModel::class.java]
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val observer = Observer<AppState>{renderData(it)}
         viewModel.getLiveData().observe(viewLifecycleOwner,observer)
         viewModel.getDataFromServer(id)
@@ -63,7 +65,8 @@ class DetailsFragment: Fragment() {
             }
             is AppState.Error ->{
                 binding.loadingLayout.hide()
-                binding.mainView.showSnackBar(R.string.snackBarError,R.string.snackBarReload){
+
+                binding.mainView.showSnackBar(appState.error.message ?: "Ошибка!!!",R.string.snackBarReload){
                     viewModel.getDataFromServer(id)
                 }
             }

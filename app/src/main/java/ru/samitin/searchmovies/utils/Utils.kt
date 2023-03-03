@@ -9,6 +9,10 @@ fun View.showSnackBar(error:Int,reload:Int,action:(View) ->Unit){
     Snackbar.make(this,this.context.getString(error),Snackbar.LENGTH_INDEFINITE)
         .setAction(this.context.getString(reload),action).show()
 }
+fun View.showSnackBar(error:String,reload:Int,action:(View) ->Unit){
+    Snackbar.make(this,error,Snackbar.LENGTH_INDEFINITE)
+        .setAction(this.context.getString(reload),action).show()
+}
 fun View.show(): View{
     if (visibility != View.VISIBLE)
         visibility = View.VISIBLE
@@ -20,10 +24,13 @@ fun View.hide(): View{
     return this
 }
 
-fun mapDescriptionMovieDTOtoMovie(descriptionMovieDTO: DescriptionMovieDTO):Movie =
+fun DescriptionMovieDTO.mapToMovie():Movie =
     Movie(
-        name = descriptionMovieDTO.title,
-        image = descriptionMovieDTO.image,
-        rating = descriptionMovieDTO.imDbRating,
-        date = descriptionMovieDTO.releaseDate,
-        description = descriptionMovieDTO.plotLocal)
+        name = this.name,
+        image = this.poster?.url,
+        rating = this.rating?.imdb.toString(),
+        date = this.year.toString(),
+        description = this.description)
+fun DescriptionMovieDTO.isNotNull():Boolean{
+    return !(this.name == null || this.poster?.url == null ||rating?.imdb == null ||this.year == null || this.description == null)
+}
