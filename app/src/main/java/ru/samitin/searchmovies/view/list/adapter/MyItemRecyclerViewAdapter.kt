@@ -3,8 +3,10 @@ package ru.samitin.searchmovies.view.list.adapter
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import coil.api.load
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentItemBinding
+import ru.samitin.searchmovies.entities.CardMovie
 import ru.samitin.searchmovies.entities.Movie
 
 /**
@@ -12,11 +14,11 @@ import ru.samitin.searchmovies.entities.Movie
  * TODO: Replace the implementation with code for your data type.
  */
 
-class MyItemRecyclerViewAdapter(var onItemClick:(movie: Movie) -> Unit) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+class MyItemRecyclerViewAdapter(var onItemClick:(cardMovie:CardMovie) -> Unit) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
-    private var values: List<Movie> = arrayListOf()
+    private var values: List<CardMovie> = arrayListOf()
 
-    fun setMovies(list : List<Movie>){
+    fun setMovies(list : List<CardMovie>){
         notifyDataSetChanged()
         values =list
     }
@@ -30,7 +32,7 @@ class MyItemRecyclerViewAdapter(var onItemClick:(movie: Movie) -> Unit) : Recycl
             name.text = item.name
             date.text = item.date
             rating.text = item.rating.toString()
-            image.setImageResource(R.drawable.the_boss_baby)
+            image.load(item.image)
             image.setOnClickListener {
                 onItemClick(item)
             }

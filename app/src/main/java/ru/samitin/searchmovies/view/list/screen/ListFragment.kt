@@ -31,6 +31,7 @@ class ListFragment : Fragment() {
         ViewModelProvider(this)[ListViewModel::class.java]
     }
     private lateinit var adapter : MyItemRecyclerViewAdapter
+    private var genres: String?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         _binding = FragmentMainListBinding.inflate(inflater,container,false)
@@ -40,11 +41,12 @@ class ListFragment : Fragment() {
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyItemRecyclerViewAdapter() {movie ->
+        genres = arguments?.getString(GENRES_ID)
+        adapter = MyItemRecyclerViewAdapter() {cardMovie ->
                 val manager = activity?.supportFragmentManager
                         if (manager != null) {
                             manager.beginTransaction()
-                                .add(R.id.container, DetailsFragment.newInstance("tt1375666"))
+                                .add(R.id.container, DetailsFragment.newInstance(cardMovie?.id))
                                 .addToBackStack("")
                                 .commitAllowingStateLoss()
                         }
@@ -54,15 +56,16 @@ class ListFragment : Fragment() {
         binding.rvList.adapter = adapter
 
         var obsrver = Observer<AppState>{renderData(it)}
-        viewModel.getLiveData().observe(viewLifecycleOwner,obsrver)
-        viewModel.getMovieFromLocalStorage()
+        viewModel.liveDataToObserve.observe(viewLifecycleOwner,obsrver)
+        if (genres!=null)
+             viewModel.getListMovieFromRemoteStorage(genres!!)
     }
 
     private fun renderData(appState: AppState?) {
         when(appState){
             is AppState.Success ->{
                 binding.loadingLayout.hide()
-                adapter.setMovies(appState.movies)
+                adapter.setMovies(appState.movies.listMovie!!)
             }
             is AppState.Loading ->{
                 binding.loadingLayout.show()
@@ -70,7 +73,7 @@ class ListFragment : Fragment() {
             is AppState.Error -> {
                 binding.loadingLayout.hide()
                 binding.rvList.showSnackBar(R.string.snackBarError,R.string.snackBarReload) {
-                    viewModel.getMovieFromLocalStorage()
+                    viewModel.getListMovieFromRemoteStorage(genres!!)
                 }
             }
             else -> {}
@@ -81,14 +84,14 @@ class ListFragment : Fragment() {
     companion object {
 
         // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
+        const val GENRES_ID = "GENRES_ID"
 
         // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(genres:String) =
             ListFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
+                    putString(GENRES_ID, genres)
                 }
             }
     }

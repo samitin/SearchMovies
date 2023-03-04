@@ -22,8 +22,8 @@ android {
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
-        def apiKey = properties.getProperty("amdb_api_key", "")
-        it.buildConfigField "String", "API_KEY_AMDB", apiKey
+        def apiKey = properties.getProperty("kinopoisk_api_key", "")
+        it.buildConfigField "String", "API_KEY_KINOPOISK", apiKey
     }
     buildTypes {
         release {
@@ -41,8 +41,11 @@ android {
 }
 
 dependencies {
-    //GSON
-    implementation 'com.google.code.gson:gson:2.9.0'
+    //Coil
+    implementation 'io.coil-kt:coil:0.11.0'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
