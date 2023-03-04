@@ -31,22 +31,18 @@ class DetailsViewModel(private val liveDataToObserve: MutableLiveData<AppState> 
 
     }
     private val desCallback = object : Callback<DescriptionMovieDTO>{
-        override fun onResponse(
-            call: Call<DescriptionMovieDTO>,
-            response: Response<DescriptionMovieDTO>
-        ) {
+        override fun onResponse(call: Call<DescriptionMovieDTO>, response: Response<DescriptionMovieDTO>) {
             val serverResponse :DescriptionMovieDTO ?= response.body()
             liveDataToObserve.postValue(
                     if (response.isSuccessful && serverResponse != null)
                         checkResponse(serverResponse)
                     else
-                        AppState.Error(Throwable(SERVER_ERROR))
+                        AppState.Error(Throwable(response.errorBody()?.string() ?: SERVER_ERROR))
             )
-
         }
 
         override fun onFailure(call: Call<DescriptionMovieDTO>, t: Throwable) {
-            liveDataToObserve.postValue(AppState.Error(Throwable(t.message ?: REQUEST_ERROR)))
+            liveDataToObserve.postValue(AppState.Error(Throwable(t.message?: REQUEST_ERROR)))
         }
 
     }

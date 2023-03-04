@@ -21,7 +21,7 @@ class DetailsFragment: Fragment() {
 
     companion object {
         const val BUNDLE_EXTRA = "BUNDLE_EXTRA"
-        fun newInstance(id:String) : DetailsFragment {
+        fun newInstance(id:String?) : DetailsFragment {
             val bundle = Bundle()
             bundle.putString(BUNDLE_EXTRA,id)
             val detailsFragment = DetailsFragment()
@@ -30,7 +30,6 @@ class DetailsFragment: Fragment() {
         }
     }
     private var id : String = ""
-    private var movie : Movie ?= null
     private var _binding : FragmentDetailsBinding?= null
     private val binding get() = _binding!!
     private val viewModel: DetailsViewModel by lazy {

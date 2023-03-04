@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, DetailsFragment.newInstance("666"))
+                .replace(R.id.container, ListFragment.newInstance("1"))
                 .commitNow()
         }
     }
