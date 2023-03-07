@@ -16,7 +16,7 @@ fun DescriptionMovieDTO.mapToMovie(): Movie =
         description = this.description)
 
 fun DescriptionMovieDTO.isNotNull():Boolean{
-    return !(this.nameRu == null || this.posterUrl == null ||ratingGoodReview == null ||this.year == null || this.description == null)
+    return !(this.posterUrl == null && ratingGoodReview == null && this.year == null && this.description == null)
 }
 fun Item.mapToCardMovie() : CardMovie =
     CardMovie(

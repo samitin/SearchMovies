@@ -19,6 +19,9 @@ class RemoteDataSource {
         movieAPI.getMovieDescription(BuildConfig.API_KEY_KINOPOISK,idMovie).enqueue(callback)
     }
 
+    fun getListMovie(genres : String ,rating: Int, callback:Callback<ListMovieDTO>){
+        movieAPI.getListMovie(BuildConfig.API_KEY_KINOPOISK,genres,rating).enqueue(callback)
+    }
     fun getListMovie(genres : String , callback:Callback<ListMovieDTO>){
         movieAPI.getListMovie(BuildConfig.API_KEY_KINOPOISK,genres).enqueue(callback)
     }

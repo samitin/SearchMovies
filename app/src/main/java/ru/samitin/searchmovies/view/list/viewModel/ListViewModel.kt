@@ -16,19 +16,18 @@ import ru.samitin.searchmovies.utils.mapToCategory
 private const val SERVER_ERROR = "Ошибка сервера"
 private const val REQUEST_ERROR = "Ошибка запроса на сервер"
 private const val CORRUPTED_DATA = "Неполные данные"
-
+const val NO_RATING = -1
 class ListViewModel(val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
                     private val repository: ListRepository = ListRepositoryIMPL(RemoteDataSource())) : ViewModel() {
 
-
-
-    fun getListMovieFromRemoteStorage(genres : String){
+    fun getListMovieFromRemoteStorage(genres : String,rating : Int){
         liveDataToObserve.value = AppState.Loading
-
-        repository.getListMovieFromServer(genres,listMovieCallback)
-
-
+        if (rating == NO_RATING)
+            repository.getListMovieFromServer(genres,listMovieCallback)
+        else
+            repository.getListMovieFromServer(genres,rating,listMovieCallback)
     }
+
     private val listMovieCallback = object : Callback<ListMovieDTO> {
         override fun onResponse(call: Call<ListMovieDTO>, response: Response<ListMovieDTO>) {
             val serverResponse : ListMovieDTO?= response.body()

@@ -19,6 +19,13 @@ interface MovieAPI {
     @GET("/api/v2.2/films/")
     fun getListMovie(
         @Header("X-API-KEY") apiKey : String,
-        @Query("genres") genres : String
+        @Query("genres") genres : String,
+        @Query("ratingTo") rating:Int
     ):Call<ListMovieDTO>
+    @GET("/api/v2.2/films/")
+    fun getListMovie(
+        @Header("X-API-KEY") apiKey : String,
+        @Query("genres") genres : String,
+    ):Call<ListMovieDTO>
+
 }
