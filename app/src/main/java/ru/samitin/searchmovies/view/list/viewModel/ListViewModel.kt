@@ -20,7 +20,7 @@ const val NO_RATING = -1
 class ListViewModel(val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
                     private val repository: ListRepository = ListRepositoryIMPL(RemoteDataSource())) : ViewModel() {
 
-    fun getListMovieFromRemoteStorage(genres : String,rating : Int){
+    fun getListMovieFromRemoteStorage(genres : Int,rating : Int){
         liveDataToObserve.value = AppState.Loading
         if (rating == NO_RATING)
             repository.getListMovieFromServer(genres,listMovieCallback)

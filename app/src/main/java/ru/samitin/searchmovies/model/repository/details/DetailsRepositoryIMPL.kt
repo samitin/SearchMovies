@@ -6,7 +6,7 @@ import ru.samitin.searchmovies.model.repository.retrofit.RemoteDataSource
 
 class DetailsRepositoryIMPL(private val remoteDataSource: RemoteDataSource) : DetailsRepository {
 
-    override fun getMovieDetailsFromServer(idMovie: String, callback: Callback<DescriptionMovieDTO>) {
+    override fun getMovieDetailsFromServer(idMovie: Int, callback: Callback<DescriptionMovieDTO>) {
         remoteDataSource.getMovieDetails(idMovie,callback)
     }
 }

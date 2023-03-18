@@ -4,6 +4,6 @@ import retrofit2.Callback
 import ru.samitin.searchmovies.model.data.list.ListMovieDTO
 
 interface ListRepository {
-    fun getListMovieFromServer(idList: String,rating : Int, callback: Callback<ListMovieDTO>)
-    fun getListMovieFromServer(idList: String, callback: Callback<ListMovieDTO>)
+    fun getListMovieFromServer(idList: Int,rating : Int, callback: Callback<ListMovieDTO>)
+    fun getListMovieFromServer(idList: Int, callback: Callback<ListMovieDTO>)
 }

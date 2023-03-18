@@ -13,4 +13,8 @@
     <string name="snackBarError">Ошибка</string>
     <string name="snackBarReload">Перезагрузить</string>
     <string name="menu_title_rating">райтинг 9+</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

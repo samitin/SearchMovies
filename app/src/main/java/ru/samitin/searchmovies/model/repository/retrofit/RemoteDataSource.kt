@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.samitin.searchmovies.BuildConfig
 import ru.samitin.searchmovies.model.data.description.DescriptionMovieDTO
+import ru.samitin.searchmovies.model.data.home.GenresAndCountriesDTO
 import ru.samitin.searchmovies.model.data.list.ListMovieDTO
 
 class RemoteDataSource {
@@ -15,14 +16,17 @@ class RemoteDataSource {
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         .build().create(MovieAPI::class.java)
 
-    fun getMovieDetails(idMovie : String , callback:Callback<DescriptionMovieDTO>){
+    fun getMovieDetails(idMovie : Int , callback:Callback<DescriptionMovieDTO>){
         movieAPI.getMovieDescription(BuildConfig.API_KEY_KINOPOISK,idMovie).enqueue(callback)
     }
 
-    fun getListMovie(genres : String ,rating: Int, callback:Callback<ListMovieDTO>){
-        movieAPI.getListMovie(BuildConfig.API_KEY_KINOPOISK,genres,rating).enqueue(callback)
+    fun getListMovie(genres : Int ,rating: Int, callback:Callback<ListMovieDTO>){
+        movieAPI.getListMovie(BuildConfig.API_KEY_KINOPOISK,genres.toString(),rating).enqueue(callback)
     }
-    fun getListMovie(genres : String , callback:Callback<ListMovieDTO>){
-        movieAPI.getListMovie(BuildConfig.API_KEY_KINOPOISK,genres).enqueue(callback)
+    fun getListMovie(genres : Int , callback:Callback<ListMovieDTO>){
+        movieAPI.getListMovie(BuildConfig.API_KEY_KINOPOISK,genres.toString()).enqueue(callback)
+    }
+    fun getGenresAndCountries(callback:Callback<GenresAndCountriesDTO>){
+        movieAPI.getListGenresAndCountries(BuildConfig.API_KEY_KINOPOISK).enqueue(callback)
     }
 }

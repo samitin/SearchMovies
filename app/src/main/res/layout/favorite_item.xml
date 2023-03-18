@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:backgroundTint="@color/bacgrount_tint_color"
+    android:layout_marginStart="3dp"
+    android:layout_marginEnd="3dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="3dp">
+    <LinearLayout
+        android:id="@+id/canteiner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_margin="5dp"
+            tools:src="@drawable/image_space_jam_a_new_legacy"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/name"
+                android:textSize="13sp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Space Jam: A New Legacy"/>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/baseline_date_range_24"
+
+                android:layout_height="wrap_content"
+
+                tools:text="08 jul 2021"/>
+            <TextView
+                android:id="@+id/rating"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_baseline_star_24"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                tools:text="78"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

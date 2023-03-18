@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import ru.samitin.searchmovies.R
 import ru.samitin.searchmovies.databinding.FragmentMainListBinding
 import ru.samitin.searchmovies.utils.hide
@@ -25,6 +27,7 @@ import ru.samitin.searchmovies.view.list.viewModel.NO_RATING
 /**
  * A fragment representing a list of Items.
  */
+
 class ListFragment : Fragment() {
 
     private var _binding :FragmentMainListBinding ?= null
@@ -34,7 +37,7 @@ class ListFragment : Fragment() {
         ViewModelProvider(this)[ListViewModel::class.java]
     }
     private lateinit var adapter : MyItemRecyclerViewAdapter
-    private var genres: String?=null
+    private var genres: Int?=null
     private var rating:Int?= NO_RATING
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -45,16 +48,11 @@ class ListFragment : Fragment() {
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        genres = arguments?.getString(GENRES_ID)
-        rating = arguments?.getInt(RATING_ID)
+        genres = arguments?.getInt(GENRES_ID)
+        rating = /*arguments?.getInt(RATING_ID) ?:*/ NO_RATING
         adapter = MyItemRecyclerViewAdapter() {cardMovie ->
-                val manager = activity?.supportFragmentManager
-                        if (manager != null) {
-                            manager.beginTransaction()
-                                .add(R.id.container, DetailsFragment.newInstance(cardMovie?.id))
-                                .addToBackStack("")
-                                .commitAllowingStateLoss()
-                        }
+            var bundle = bundleOf(DetailsFragment.ID_MOVIE_DETAILS to cardMovie.id)
+            view?.findNavController()?.navigate(R.id.action_listFragment_to_detailsFragment, bundle)
         }
 
         binding.rvList.layoutManager = GridLayoutManager(context,3)
@@ -62,10 +60,10 @@ class ListFragment : Fragment() {
 
         var obsrver = Observer<AppState>{renderData(it)}
         viewModel.liveDataToObserve.observe(viewLifecycleOwner,obsrver)
-        if (genres!=null)
-             viewModel.getListMovieFromRemoteStorage(
-                 genres!!,
-                 rating ?:0)
+
+        viewModel.getListMovieFromRemoteStorage(genres!!, rating ?: NO_RATING)
+
+
     }
 
     private fun renderData(appState: AppState?) {
@@ -97,15 +95,7 @@ class ListFragment : Fragment() {
 
         // TODO: Customize parameter argument names
         const val GENRES_ID = "GENRES_ID"
-        const val RATING_ID ="RATING_ID"
+        const val RATING_ID = "RATING_ID"
         // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(genres:String,rating: Int = NO_RATING) =
-            ListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(GENRES_ID, genres)
-                    putInt(RATING_ID,rating)
-                }
-            }
     }
 }

@@ -6,7 +6,7 @@
     android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:paddingBottom="?attr/actionBarSize">
 
 <androidx.recyclerview.widget.RecyclerView
     android:name="ru.samitin.searchmovies.view.MainFragment"
@@ -15,7 +15,8 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
+    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
     tools:context=".view.list.screen.ListFragment"
     tools:listitem="@layout/fragment_item" />
     <FrameLayout
