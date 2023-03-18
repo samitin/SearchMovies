@@ -5,5 +5,5 @@ import ru.samitin.searchmovies.model.data.description.DescriptionMovieDTO
 
 interface DetailsRepository {
 
-    fun getMovieDetailsFromServer(idMovie :String,callback : Callback<DescriptionMovieDTO>)
+    fun getMovieDetailsFromServer(idMovie :Int,callback : Callback<DescriptionMovieDTO>)
 }

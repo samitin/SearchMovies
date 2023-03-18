@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="ru.samitin.searchmovies.view.ui.home.screen.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="ru.samitin.searchmovies.view.ui.favorites.fragment.FavoritesFragment"
+        android:label="понравившиеся"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorite_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="ru.samitin.searchmovies.view.ui.settings.SettingsFragment"
+        android:label="настройки"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="ru.samitin.searchmovies.view.list.screen.ListFragment"
+        android:label="ListFragment"
+        tools:layout="@layout/fragment_main_list">
+        <action
+            android:id="@+id/action_listFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <argument
+            android:name="GENRES_ID"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="ru.samitin.searchmovies.view.details.screen.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="idMovie"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+</navigation>

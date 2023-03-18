@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class CardMovie(
-     val id : String ?=null,
+     val id : Int ?=null,
      val name : String?=null,
      val image : String ?= null,
-     val rating : String?=null,
+     val rating : Double?=null,
      val date : String?=null, ) : Parcelable
 
